@@ -37,7 +37,9 @@ pip install -e .
 ```
 
 ## Usage
-See [docs](./xequinet/docs) for details.
+For detailed documentation, please refer to the [XequiNet User Manual](https://xequinetdoc.readthedocs.io/zh-cn/latest/). We apologize that the documentation is currently only available in Chinese.
+
+Simple documents can be viewed at [docs](./xequinet/docs) for details.
 
 ## Model availability
 You can download our trained models through our [Zenodo page](https://zenodo.org/records/14676636).

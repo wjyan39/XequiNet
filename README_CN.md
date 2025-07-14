@@ -37,7 +37,9 @@ pip install -e .
 ```
 
 ## 使用方法
-详见[docs](./xequinet/docs)。
+详细文档请参阅 [XequiNet 使用文档](https://xequinetdoc.readthedocs.io/zh-cn/latest/)。很抱歉，目前文档仅有中文版本。
+
+简易文档可见[docs](./xequinet/docs)。
 
 ## 模型获取
 训练完成的模型可以在我们的 [Zenodo页面](https://zenodo.org/records/14676636) 获取。
