@@ -35,6 +35,7 @@ class ScalarOut(OutputModule):
         node_scale: float = 1.0,
         reduce_op: Optional[str] = "sum",
         output_field: str = keys.SCALAR_OUTPUT,
+        output_dim: int = 1,
         **kwargs,
     ) -> None:
         """
@@ -46,12 +47,15 @@ class ScalarOut(OutputModule):
             `node_shift`: Shift for atomic wise output.
             `node_scale`: Scale for atomic wise output.
             `reduce_op`: Reduce operation for the output.
+            `output_field`: Field name for the output.
+            `output_dim`: Dimension of the output.
         """
         super().__init__()
         self.node_dim = node_dim
         self.hidden_dim = hidden_dim
+        self.output_dim = output_dim
 
-        final_linear = nn.Linear(self.hidden_dim, 1)
+        final_linear = nn.Linear(self.hidden_dim, self.output_dim)
         final_linear.weight.data *= node_scale
         nn.init.constant_(final_linear.bias, node_shift)
         self.out_mlp = nn.Sequential(
@@ -67,7 +71,7 @@ class ScalarOut(OutputModule):
 
         batch = data[keys.BATCH]
         node_scalar = data[keys.NODE_INVARIANT]
-        res = self.out_mlp(node_scalar).reshape(-1)
+        res = self.out_mlp(node_scalar).squeeze(-1)
 
         if self.reduce_op is not None:
             res = scatter(res, batch, dim=0, reduce=self.reduce_op)
