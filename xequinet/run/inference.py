@@ -44,6 +44,11 @@ def inference(
         with torch.enable_grad():
             result = model(data.to_dict(), compute_forces, compute_virial)
 
+        # save the results if verbose
+        if verbose:
+            data_list.append(data)
+            results_list.append(result)
+
         if all(prop not in result for prop in keys.STANDARD_PROPERTIES):
             if not verbose:
                 raise RuntimeError(
@@ -168,10 +173,6 @@ def inference(
                     )
                     f.write("\n")
                 f.write("\n")
-        # save the results if verbose
-        if verbose:
-            data_list.append(data)
-            results_list.append(result)
 
     # collate the results if verbose
     if verbose:
